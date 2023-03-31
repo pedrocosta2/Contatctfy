@@ -2,9 +2,11 @@ import { ButtonLogin,  Form, GoRegister, Sec, Title } from "./styles";
 import { useForm } from "react-hook-form";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ISubmit } from "../../interfaces/loginPage.interfaces";
+import { ISubmit } from "../../interfaces";
+import { useContext } from "react";
+import { ClientContext } from "../../contexts/client.context";
 const LoginPage = () => {
-    // const { loading, notification, onSubmit, navigate } = useContext(UserContext);
+    const { onSubmit, navigate } = useContext(ClientContext);
   
     const formSchema = yup.object().shape({
       email: yup.string().required("Nome obrigatorio").email("tem que ser um email valido"),
@@ -21,7 +23,7 @@ const LoginPage = () => {
         <Title>Contacfy</Title> 
         </header>
         
-          <Form>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <h3>Login</h3>
   
             <label htmlFor="email">Email</label>

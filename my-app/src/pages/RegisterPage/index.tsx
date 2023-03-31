@@ -1,18 +1,15 @@
 import { useForm } from "react-hook-form";
-import {
-  ButtonRegister,
-  Container,
-  Form,
-  GoLogin,
-  Sec,
-  Title,
-} from "./styles";
+import { ButtonRegister, Container, Form, GoLogin, Sec, Title } from "./styles";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { IRegisterUser } from "../../interfaces/registerPage.interfaces";
+import { IRegisterClient } from "../../interfaces/index";
+import { ClientContext } from "../../contexts/client.context";
+import { useContext } from "react";
 
 const RegisterPage = () => {
-  // const { registerUser, notice, navigate } = useContext(UserContext);
+  const {
+    registerClient,
+  } = useContext(ClientContext);
 
   const formSchema = yup.object().shape({
     name: yup.string().required("Nome obrigatório"),
@@ -37,7 +34,7 @@ const RegisterPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegisterUser>({
+  } = useForm<IRegisterClient>({
     resolver: yupResolver(formSchema),
   });
 
@@ -48,7 +45,7 @@ const RegisterPage = () => {
         <GoLogin to="/login">Login</GoLogin>
       </Container>
 
-      <Form>
+      <Form onSubmit={handleSubmit(registerClient)}>
         <div>
           <h3>Crie sua conta</h3>
         </div>
@@ -94,8 +91,7 @@ const RegisterPage = () => {
         />
 
         <p>{errors.phone?.message}</p>
-          <ButtonRegister type="submit">Cadastrar</ButtonRegister>
-        
+        <ButtonRegister type="submit">Cadastrar</ButtonRegister>
       </Form>
     </Sec>
   );
