@@ -5,9 +5,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ISubmit } from "../../interfaces";
 import { useContext } from "react";
 import { ClientContext } from "../../contexts/client.context";
+import { ContactContext } from "../../contexts/contact.context";
 const LoginPage = () => {
-    const { onSubmit, navigate } = useContext(ClientContext);
-  
+    const { onSubmit, navigate, client} = useContext(ClientContext);
+
+  if(client) {
+    navigate("/dashboard")
+  }
     const formSchema = yup.object().shape({
       email: yup.string().required("Nome obrigatorio").email("tem que ser um email valido"),
       password: yup.string().required("Senha obrigatória"),

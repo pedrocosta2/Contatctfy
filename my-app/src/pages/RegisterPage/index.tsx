@@ -9,7 +9,13 @@ import { useContext } from "react";
 const RegisterPage = () => {
   const {
     registerClient,
+    client,
+    navigate
   } = useContext(ClientContext);
+  
+  if(client) {
+    navigate("/login")
+  }
 
   const formSchema = yup.object().shape({
     name: yup.string().required("Nome obrigatório"),
@@ -21,9 +27,9 @@ const RegisterPage = () => {
     password: yup
       .string()
       .required(
-        "Senha obrigatória, a senha devera conter no minimo 8 caracteres"
+        "Senha obrigatória, a senha devera conter no minimo 5 caracteres"
       )
-      .min(8, "A senha deve ter no minimo 8 caracteres"),
+      .min(5, "A senha deve ter no minimo 5 caracteres"),
     passwordConfirmation: yup
       .string()
       .required("Confirme sua senha")
